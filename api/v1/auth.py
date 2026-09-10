@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
-from app.api.v1.models.auth import LoginResponse, LoginRequest
+from repositories.users import UserRepository
+from schemas.auth import LoginRequest, LoginResponse
+from services.auth import AuthService
 
-router = APIRouter(prefix="/auth")
+router = APIRouter()
 
 
 @router.post(path="/login", summary="User Authentication",
@@ -18,12 +20,9 @@ router = APIRouter(prefix="/auth")
                             "application/json": {"example": {"detail": [
                                 {"loc": ["body", "email"], "msg": "value is not a valid email address",
                                  "type": "value_error.email"}]}}}}, }, tags=["Authentication"])
-def login(request: LoginRequest):
-    if not request.email or not request.password:
-        raise HTTPException(status_code=400, detail="Invalid email or password")
+async def login(request: LoginRequest, db: Session = Depends(get_db)):
+    service = AuthService(UserRepository(db))
 
-    if (request.email == "user1@gmail.com" and request.password == "user_1111") or (
-            request.email == "user2@gmail.com" and request.password == "user_2222"):
-        return {"message": "Login successful"}
+    token = service.authenticate_user(request.email, request.password)
 
-    raise HTTPException(status_code=401, detail="Unauthorized")
+    return LoginResponse(access_token=token, token_type="bearer")

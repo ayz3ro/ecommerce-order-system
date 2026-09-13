@@ -1,6 +1,9 @@
-from core.exceptions import InvalidCredentials, NotFound
-from core.security import create_access_token
+from sqlalchemy.exc import IntegrityError
+
+from core.exceptions import InvalidCredentials, NotFound, EmailAlreadyInUse
+from core.security import create_access_token, hash_password
 from core.security import verify_password
+from schemas.auth import RegisterResponse
 
 
 class AuthService:
@@ -18,3 +21,23 @@ class AuthService:
             raise InvalidCredentials()
 
         return create_access_token(user.id)
+
+    def register_user(
+        self,
+        email: str,
+        password: str,
+    ) -> RegisterResponse:
+
+        user = self.user_repository.create(
+            email=email,
+            password=password,
+        )
+
+        access_token = create_access_token(
+            user_id=user.id,
+        )
+
+        return RegisterResponse(
+            access_token=access_token,
+            token_type="bearer",
+        )

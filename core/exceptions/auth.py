@@ -12,9 +12,8 @@ class AuthenticationError(AppException):
 class NotFound(AppException):
     """The user doesn't exist."""
 
-    def __init__(self, message: str = "Authentication failed.", *, code: str = "USER_NOT_FOUND",
-                 status_code: int = 404, ) -> None:
-        super().__init__(message, code=code, status_code=status_code, )
+    def __init__(self) -> None:
+        super().__init__(message="User not foound", code="USER_NOT_FOUND", status_code=404, )
 
 
 class InvalidCredentials(AuthenticationError):
@@ -27,7 +26,7 @@ class InvalidCredentials(AuthenticationError):
 class AccountDisabled(AuthenticationError):
     """Raised when a disabled account attempts authentication."""
 
-    def __init__(sexslf) -> None:
+    def __init__(self) -> None:
         super().__init__(message="This account is disabled.", code="ACCOUNT_DISABLED", status_code=403, )
 
 
@@ -43,3 +42,10 @@ class TokenExpired(AuthenticationError):
 
     def __init__(self) -> None:
         super().__init__(message="Authentication token has expired.", code="TOKEN_EXPIRED", status_code=401, )
+
+
+class EmailAlreadyInUse(AuthenticationError):
+    """Raised when an email is already registered."""
+
+    def __init__(self) -> None:
+        super().__init__(message="An account with this email already exists.", code="EMAIL_ALREADY_IN_USE", status_code=409, )

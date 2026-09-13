@@ -1,4 +1,4 @@
-from core.exceptions import InvalidCredentials
+from core.exceptions import InvalidCredentials, NotFound
 from core.security import create_access_token
 from core.security import verify_password
 
@@ -12,7 +12,7 @@ class AuthService:
         user = self.user_repository.get_by_email(email.lower())
 
         if user is None:
-            raise InvalidCredentials()
+            raise NotFound()
 
         if not verify_password(password, user.password_hash, ):
             raise InvalidCredentials()

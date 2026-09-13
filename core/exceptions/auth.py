@@ -5,7 +5,15 @@ class AuthenticationError(AppException):
     """Base exception for authentication failures."""
 
     def __init__(self, message: str = "Authentication failed.", *, code: str = "AUTHENTICATION_ERROR",
-            status_code: int = 401, ) -> None:
+                 status_code: int = 401, ) -> None:
+        super().__init__(message, code=code, status_code=status_code, )
+
+
+class NotFound(AppException):
+    """The user doesn't exist."""
+
+    def __init__(self, message: str = "Authentication failed.", *, code: str = "USER_NOT_FOUND",
+                 status_code: int = 404, ) -> None:
         super().__init__(message, code=code, status_code=status_code, )
 
 

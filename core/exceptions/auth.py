@@ -48,4 +48,5 @@ class EmailAlreadyInUse(AuthenticationError):
     """Raised when an email is already registered."""
 
     def __init__(self) -> None:
-        super().__init__(message="An account with this email already exists.", code="EMAIL_ALREADY_IN_USE", status_code=409, )
+        super().__init__(message="An account with this email already exists.", code="EMAIL_ALREADY_IN_USE",
+                         status_code=409, )

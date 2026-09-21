@@ -17,6 +17,6 @@ def login(request: LoginRequest, auth_service: AuthServiceDependency, ) -> Login
 
 
 @router.post("/register", response_model=RegisterResponse, status_code=status.HTTP_201_CREATED,
-    summary="User Registration", )
+             summary="User Registration", )
 def register(request: RegisterRequest, auth_service: AuthServiceDependency, ) -> RegisterResponse:
     return auth_service.register_user(email=request.email, password=request.password, )

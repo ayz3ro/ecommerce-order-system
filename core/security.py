@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
+from jose import JWTError, jwt
 from pwdlib import PasswordHash
 
 from core.config import settings
@@ -33,9 +34,6 @@ def create_access_token(subject: str, *, expires_delta: timedelta | None = None,
         payload.update(additional_claims)
 
     return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM, )
-
-
-from jose import JWTError, jwt
 
 
 def decode_access_token(token: str) -> dict:

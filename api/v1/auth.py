@@ -3,8 +3,8 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 
 from api.dependencies import get_auth_service
-from schemas.auth import (LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, )
-from services.auth import AuthService
+from modules.auth.schemas import (LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, )
+from modules.auth.service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["Authentication"], )
 

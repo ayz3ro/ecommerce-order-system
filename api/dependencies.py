@@ -2,11 +2,11 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from db.session import get_db
-from repositories.users import UserRepository
-from services.auth import AuthService
+from modules.customers.repository import CustomerRepository
+from modules.auth.service import AuthService
 
 
 def get_auth_service(db: Session = Depends(get_db), ) -> AuthService:
-    user_repository = UserRepository(db)
+    user_repository = CustomerRepository(db)
 
     return AuthService(user_repository=user_repository, )

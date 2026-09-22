@@ -1,10 +1,10 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from models.user import User
+from modules.customers.models import User
 
 
-class UserRepository:
+class CustomerRepository:
     def __init__(self, db: Session) -> None:
         self.db = db
 

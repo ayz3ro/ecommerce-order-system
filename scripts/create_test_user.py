@@ -1,6 +1,6 @@
 from core.security import hash_password
 from db.session import SessionLocal
-from models.user import User
+from modules.customers.models import User
 
 
 def main() -> None:

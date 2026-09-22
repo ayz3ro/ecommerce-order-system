@@ -1,6 +1,6 @@
 from core.exceptions import InvalidCredentials, EmailAlreadyInUse
 from core.security import create_access_token, verify_password, hash_password
-from schemas.auth import LoginResponse, RegisterResponse
+from modules.auth.schemas import LoginResponse, RegisterResponse
 
 
 class AuthService:
